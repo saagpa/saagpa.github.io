@@ -1,10 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Website Saya</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Rak Perpustakaan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0b12;--surface:#12121c;--card:#181825;--bd:#23233a;--text:#e2e2f0;--muted:#9494b8;--accent:#6c6ff5;--font:'Inter',system-ui,sans-serif}
+[data-theme="light"]{--bg:#f4f4f9;--surface:#eaeaef;--card:#dfdfec;--bd:#c5c5d4;--text:#15152a;--muted:#6a6a88;--accent:#5356d1}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;transition:background .25s,color .25s}
+a{text-decoration:none;color:inherit}
+
+.nav{display:flex;align-items:center;gap:10px;padding:10px 28px;background:var(--surface);border-bottom:1px solid var(--bd);transition:background .25s,border-color .25s}
+.nav-title{font-size:.82rem;font-weight:700}
+.nav-spacer{flex:1}
+.theme-btn{width:30px;height:30px;border-radius:6px;border:1px solid var(--bd);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s;font-size:14px;line-height:1}
+.theme-btn:hover{background:var(--accent);border-color:var(--accent)}
+
+.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center}
+.hero h1{font-size:clamp(1.6rem,4vw,2.6rem);font-weight:800;letter-spacing:-.02em;margin-bottom:10px}
+.hero>p{font-size:.9rem;color:var(--muted);max-width:480px;margin:0 auto 40px;transition:color .25s}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:560px;width:100%}
+.card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:36px 20px 32px;background:var(--card);border:1px solid var(--bd);border-radius:10px;cursor:pointer;position:relative;transition:background .2s,border-color .2s}
+.card:hover{background:var(--accent);border-color:var(--accent)}
+.card:hover .card-label,.card:hover .card-desc{color:#fff}
+.card-ico{font-size:1.8rem;margin-bottom:10px}
+.card-label{font-size:.95rem;font-weight:700;margin-bottom:4px;transition:color .2s}
+.card-desc{font-size:.78rem;color:var(--muted);transition:color .25s;line-height:1.5}
+.card-wide{grid-column:span 2;padding:24px 20px;flex-direction:row;align-items:center;text-align:left;gap:16px}
+.card-wide .card-ico{margin-bottom:0;font-size:1.5rem}
+
+.footer{border-top:1px solid var(--bd);padding:18px 28px;text-align:center;transition:border-color .25s}
+.footer span{font-size:.7rem;color:var(--muted);transition:color .25s}
+
+@media(max-width:540px){
+  .grid{grid-template-columns:1fr;max-width:280px}
+  .hero{padding:40px 18px}
+  .card-wide{grid-column:span 1;flex-direction:column;align-items:center;text-align:center}
+  .card-wide .card-ico{margin-bottom:10px}
+}
+</style>
 </head>
 <body>
-    <h1>Halo, Dunia!</h1>
-    <p>Ini adalah website GitHub Pages pertama saya.</p>
+
+<nav class="nav">
+  <span class="nav-title">Rak Perpustakaan</span>
+  <span class="nav-spacer"></span>
+  <button class="theme-btn" id="themeBtn" title="Ganti tema">🌙</button>
+</nav>
+
+<div class="hero">
+  <h1>Rak Perpustakaan</h1>
+  <p>Pilih rak — setiap bagian berisi referensi dan praktik untuk dikembangkan bersama.</p>
+  <div class="grid">
+    <a href="proyekan/index.html" class="card">
+      <div class="card-ico">🛠️</div>
+      <div class="card-label">Tim Proyekan</div>
+      <div class="card-desc">Code &amp; command yang sering digunakan di berbagai stack.</div>
+    </a>
+    <a href="pengajar/index.html" class="card">
+      <div class="card-ico">🧑‍🏫</div>
+      <div class="card-label">Tim Pengajar</div>
+      <div class="card-desc">Sektor industri Indonesia — korelasi dengan modul ERP.</div>
+    </a>
+    <a href="pemasaran/index.html" class="card">
+      <div class="card-ico">📢</div>
+      <div class="card-label">Tim Pemasaran</div>
+      <div class="card-desc">Siklus penawaran — rute positif, negatif, dan edge case.</div>
+    </a>
+    <a href="mitra/index.html" class="card">
+      <div class="card-ico">🤝</div>
+      <div class="card-label">Mitra</div>
+      <div class="card-desc">Mitra yang telah berkolaborasi dalam ekosistem.</div>
+    </a>
+    <a href="todolist/index.html" class="card card-wide">
+      <div class="card-ico">🏢</div>
+      <div class="card-label" id="kelolLabel">Kelola Alteco</div>
+    </a>
+  </div>
+</div>
+
+<footer class="footer"><span>© 2026 Rak Perpustakaan</span></footer>
+
+<script>
+(function(){
+  try{
+    const d=JSON.parse(localStorage.getItem('rakperpus_alteco_v2'));
+    if(d&&d.orgName) document.getElementById('kelolLabel').textContent='Kelola '+d.orgName;
+  }catch{}
+})();
+(function(){
+  const btn=document.getElementById('themeBtn'),html=document.documentElement;
+  if(localStorage.getItem('theme')==='light'){html.setAttribute('data-theme','light');btn.textContent='☀️'}
+  btn.addEventListener('click',()=>{
+    if(html.getAttribute('data-theme')==='light'){html.removeAttribute('data-theme');btn.textContent='🌙';localStorage.setItem('theme','dark')}
+    else{html.setAttribute('data-theme','light');btn.textContent='☀️';localStorage.setItem('theme','light')}
+  });
+})();
+</script>
 </body>
 </html>
